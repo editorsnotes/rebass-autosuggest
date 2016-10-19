@@ -14,7 +14,8 @@
     "precompile": "npm -s run lint",
     "compile": "babel src -d lib --source-maps inline",
     "pretest": "npm -s run compile",
-    "test": "tape lib/tests/*.js | tap-spec"
+    "test": "tape lib/tests/*.js | tap-spec",
+    "prepublish": "babel src -d lib"
   },
   "author": "Ryan Shaw",
   "license": "ISC",
