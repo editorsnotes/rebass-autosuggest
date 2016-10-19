@@ -2,10 +2,13 @@ const React = require('react') // eslint-disable-line no-unused-vars
     , test = require('tape')
     , {shallow, mount} = require('enzyme')
     , {isDOMComponent} = require('react-addons-test-utils')
+    , {Input} = require('rebass')
     , Autosuggest = require('../Autosuggest')
 
 const props =
-  { suggestions: [{text: 'A'}, {text: 'B'}, {text: 'C'}]
+  { name: 'test'
+  , label: 'Test'
+  , suggestions: [{text: 'A'}, {text: 'B'}, {text: 'C'}]
   , onSuggestionsFetchRequested: ()=>{}
   , onSuggestionsClearRequested: ()=>{}
   , getSuggestionValue: suggestion => suggestion.text
@@ -56,7 +59,7 @@ test('context styles override default styles', t => {
 test('style props override context styles', t => {
   const wrapper = shallow(
     <Autosuggest {...props} m={0} style={{margin: 12}} />,
-    {context: {rebass: {Input: {margin: 24}}}}
+    {context: {rebass: {Autosuggest: {margin: 24}}}}
   )
       , inner = wrapper.first().shallow()
   t.plan(1)
@@ -71,3 +74,25 @@ test('baseRef returns the input element', t => {
   t.ok(isDOMComponent(input))
 })
 
+test('passes appropriate props to Label', t => {
+  const wrapper = mount(
+    <Autosuggest {...props}
+      label="Test"
+      name="test"
+      type="search"
+      message="Help!"
+      hideLabel
+      horizontal
+      autoOff
+    />
+  )
+      , input = wrapper.find(Input).first()
+  t.plan(7)
+  t.equal(input.prop('label'), 'Test')
+  t.equal(input.prop('name'), 'test')
+  t.equal(input.prop('type'), 'search')
+  t.equal(input.prop('message'), 'Help!')
+  t.equal(input.prop('hideLabel'), true)
+  t.equal(input.prop('horizontal'), true)
+  t.equal(input.prop('autoOff'), true)
+})

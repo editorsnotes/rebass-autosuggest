@@ -1,15 +1,26 @@
 const React = require('react') // eslint-disable-line no-unused-vars
     , ReactAutosuggest = require('react-autosuggest')
     , classnames = require('classnames')
-    , {withRebass, Input, Block, List} = require('rebass')
+    , {withRebass} = require('rebass')
+    , FocusableInput = require('./FocusableInput')
 
 const Autosuggest = (
-  { baseRef
+  { label
+  , name
+  , type
+  , message
+  , hideLabel
+  , horizontal
+  , baseRef
+  , autoOff
   , className
   , style
+  , theme
   , subComponentStyles
   , ...props
   }) => {
+
+  const {scale, zIndex, colors, borderColor, borderRadius} = theme
 
   const cx = classnames('Autosuggest', className)
 
@@ -18,7 +29,41 @@ const Autosuggest = (
   } = style
 
   const sx =
-    { root: { ...rootStyle }
+    { root:
+      { position: 'relative'
+      , marginBottom: scale[2]
+      , ...rootStyle
+      }
+    , suggestionsContainer:
+      { position: 'absolute'
+      , left: 0
+      , right: 'auto'
+      , top: '100%'
+      , bottom: 'auto'
+      , zIndex: zIndex[1]
+      , ...subComponentStyles.suggestionsContainer
+      }
+    , suggestionsList:
+      { listStyle: 'none'
+      , margin: 0
+      , padding: 0
+      , borderWidth: 1
+      , borderStyle: 'solid'
+      , borderColor
+      , borderRadius
+      , backgroundColor: colors.white
+      , ...subComponentStyles.suggestionsList
+      }
+    , suggestion:
+      { lineHeight: 2
+      , paddingLeft: scale[1]
+      , paddingRight: scale[1]
+      , ...subComponentStyles.suggestion
+      }
+    , suggestionFocused:
+      { backgroundColor: colors.muted
+      , ...subComponentStyles.suggestionFocused
+      }
     }
 
   return (
@@ -27,29 +72,23 @@ const Autosuggest = (
       style={sx.root}
     >
       <ReactAutosuggest
-        ref={autosuggest => baseRef(autosuggest ? autosuggest.input : null)}
-        inputComponent={
-          props => (
-            <Input
-              {...props}
-              baseRef={baseRef}
-              subComponentStyles={subComponentStyles}
-            />
+        renderInputComponent={
+          props => React.createElement(FocusableInput,
+            { ...props
+            , label
+            , name
+            , type
+            , message
+            , hideLabel
+            , horizontal
+            , autoOff
+            , baseRef
+            , mb: 0
+            , subComponentStyles
+            }
           )
         }
-        renderSuggestionsContainer={
-          ({children, ...props}) => (
-            <Block
-              {...props}
-              subComponentStyles={subComponentStyles}
-            >
-              <List
-                children={children}
-                subComponentStyles={subComponentStyles}
-              />
-            </Block>
-          )
-        }
+        theme={sx}
         {...props}
       />
     </div>

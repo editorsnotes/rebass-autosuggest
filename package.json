@@ -16,7 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "classnames": "^2.2.5",
-    "react-autosuggest": "^6.0.4",
+    "react-autosuggest": "^7.0.0",
     "rebass": "^0.4.0-beta.8"
   },
   "peerDependencies": {
