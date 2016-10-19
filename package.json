@@ -1,6 +1,7 @@
 {
   "name": "rebass-autosuggest",
   "version": "1.0.0",
+  "repository": "editorsnotes/rebass-autosuggest",
   "description": "Style react-autosuggest using rebass",
   "main": "index.js",
   "scripts": {
