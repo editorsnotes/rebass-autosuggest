@@ -3,8 +3,7 @@ const React = require('react') // eslint-disable-line no-unused-vars
 
 const FocusableInput = React.createClass(
   { focus: function() {
-      this.input.focus
-
+      this.input.focus()
     }
   , storeInputReference: function(input) {
       this.input = input
