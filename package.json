@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "repository": "editorsnotes/rebass-autosuggest",
   "description": "Style react-autosuggest using rebass",
-  "main": "index.js",
+  "files": ["lib"],
+  "main": "lib/Autosuggest.js",
   "scripts": {
     "develop": "npm -s run develop-target --target=src/develop.js",
     "develop-target": "budo $npm_config_target --live -- -t [ babelify --sourceMaps inline ]",
