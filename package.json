@@ -1,9 +1,11 @@
 {
   "name": "rebass-autosuggest",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "repository": "editorsnotes/rebass-autosuggest",
   "description": "Style react-autosuggest using rebass",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "main": "lib/Autosuggest.js",
   "scripts": {
     "develop": "npm -s run develop-target --target=src/develop.js",
