@@ -24,18 +24,26 @@ const Autosuggest = (
 
   const cx = classnames('Autosuggest', className)
 
-  const {
-    ...rootStyle
-  } = style
+  const
+    { paddingBottom
+    , paddingLeft
+    , padding
+    , ...rootStyle
+    } = style
 
   const sx =
     { root:
       { position: 'relative'
+      , paddingBottom
+      , paddingLeft
+      , padding
       , marginBottom: scale[2]
       , ...rootStyle
       }
     , suggestionsContainer:
       { position: 'absolute'
+      , marginLeft: paddingLeft || padding
+      , marginTop: -(paddingBottom || padding)
       , left: 0
       , right: 'auto'
       , top: '100%'
