@@ -20,38 +20,60 @@ const Autosuggest = (
   , ...props
   }) => {
 
-  const {scale, zIndex, colors, borderColor, borderRadius} = theme
+  const {scale, zIndex, colors, borderColor, borderRadius, fontSizes} = theme
 
   const cx = classnames('Autosuggest', className)
 
-  const {
-    ...rootStyle
-  } = style
+  const
+    { paddingBottom
+    , paddingLeft
+    , padding
+    , ...rootStyle
+    } = style
 
   const sx =
     { root:
       { position: 'relative'
+      , paddingBottom
+      , paddingLeft
+      , padding
       , marginBottom: scale[2]
       , ...rootStyle
       }
     , suggestionsContainer:
       { position: 'absolute'
+      , marginLeft: (paddingLeft || padding || 0)
+      , marginTop: -(paddingBottom || padding || 0)
       , left: 0
       , right: 'auto'
       , top: '100%'
       , bottom: 'auto'
       , zIndex: zIndex[1]
+      , borderWidth: 1
+      , borderColor
+      , borderBottomRightRadius: borderRadius
+      , borderBottomLeftRadius: borderRadius
+      , backgroundColor: colors.white
       , ...subComponentStyles.suggestionsContainer
+      }
+    , sectionContainer:
+      { ...subComponentStyles.sectionContainer
+      }
+    , sectionTitle:
+      { borderTopWidth: 1
+      , borderTopStyle: 'dashed'
+      , borderColor
+      , paddingLeft: scale[1]
+      , paddingRight: scale[1]
+      , lineHeight: 2
+      , fontSize: fontSizes[6]
+      , color: colors.secondary
+      , ...subComponentStyles.sectionTitle
       }
     , suggestionsList:
       { listStyle: 'none'
       , margin: 0
       , padding: 0
-      , borderWidth: 1
-      , borderStyle: 'solid'
-      , borderColor
-      , borderRadius
-      , backgroundColor: colors.white
       , ...subComponentStyles.suggestionsList
       }
     , suggestion:
@@ -65,6 +87,8 @@ const Autosuggest = (
       , ...subComponentStyles.suggestionFocused
       }
     }
+
+  const {suggestionsContainerStyle, ...autosuggestTheme} = sx
 
   return (
     <div
@@ -88,7 +112,22 @@ const Autosuggest = (
             }
           )
         }
-        theme={sx}
+        renderSuggestionsContainer={
+          ({children, style, ...props}) => (
+            <div
+              style={
+                { ...style
+                , ...suggestionsContainerStyle
+                , borderStyle: children == null ? 'none' : 'none solid solid'
+                }
+              }
+              {...props}
+            >
+              {children}
+            </div>
+          )
+        }
+        theme={autosuggestTheme}
         {...props}
       />
     </div>
