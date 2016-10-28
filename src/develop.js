@@ -4,10 +4,14 @@ const React = require('react') // eslint-disable-line no-unused-vars
     , Autosuggest = require('./Autosuggest')
 
 const snacks =
-  [ {label: 'Apple'}
-  , {label: 'Banana'}
-  , {label: 'Blueberries'}
-  , {label: 'Carrot'}
+  [ {label: 'Apple', category: 'Healthy'}
+  , {label: 'Banana', category: 'Healthy'}
+  , {label: 'Blueberries', category: 'Healthy'}
+  , {label: 'Carrot', category: 'Healthy'}
+  , {label: 'Almond Joy', category: 'Unhealthy'}
+  , {label: 'Beer Nuts', category: 'Unhealthy'}
+  , {label: 'Butterfinger', category: 'Unhealthy'}
+  , {label: 'Cheetos', category: 'Unhealthy'}
   ]
 
 const getSuggestions = value => {
@@ -16,6 +20,21 @@ const getSuggestions = value => {
 
   return inputLength === 0 ? [] : snacks.filter(snack =>
     snack.label.toLowerCase().slice(0, inputLength) === inputValue
+  )
+}
+
+const categorize = suggestions => {
+  const categorized = suggestions
+    .reduce(
+      (categorized, suggestion) => (
+        { ...categorized
+        , [suggestion.category]:
+            [...categorized[suggestion.category], suggestion]
+        }
+      ), {Healthy: [], Unhealthy: []}
+    )
+  return Object.keys(categorized).map(
+    category => ({category: category, suggestions: categorized[category]})
   )
 }
 
@@ -74,7 +93,7 @@ const App = React.createClass(
             hideLabel={true}
             suggestions={this.state.suggestions}
             onSuggestionsFetchRequested={({value}) => {
-              this.setState({suggestions: getSuggestions(value)})
+              this.setState({suggestions: categorize(getSuggestions(value))})
             }}
             onSuggestionsClearRequested={() => {
               this.setState({suggestions: []})
@@ -88,6 +107,9 @@ const App = React.createClass(
                 }
               }
             }
+            multiSection={true}
+            renderSectionTitle={section => section.category}
+            getSectionSuggestions={section => section.suggestions}
           />
         </div>
       )
