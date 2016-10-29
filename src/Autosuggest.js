@@ -51,6 +51,7 @@ const Autosuggest = (
       , zIndex: zIndex[1]
       , borderWidth: 1
       , borderColor
+      , borderStyle: 'none solid solid'
       , borderBottomRightRadius: borderRadius
       , borderBottomLeftRadius: borderRadius
       , backgroundColor: colors.white
@@ -88,8 +89,6 @@ const Autosuggest = (
       }
     }
 
-  const {suggestionsContainerStyle, ...autosuggestTheme} = sx
-
   return (
     <div
       className={cx}
@@ -117,8 +116,7 @@ const Autosuggest = (
             <div
               style={
                 { ...style
-                , ...suggestionsContainerStyle
-                , borderStyle: children == null ? 'none' : 'none solid solid'
+                , borderStyle: children == null ? 'none' : style.borderStyle
                 }
               }
               {...props}
@@ -127,7 +125,7 @@ const Autosuggest = (
             </div>
           )
         }
-        theme={autosuggestTheme}
+        theme={sx}
         {...props}
       />
     </div>

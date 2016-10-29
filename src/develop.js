@@ -56,7 +56,11 @@ const App = React.createClass(
           />
           <Autosuggest
             p={1}
-            style={{border: '1px solid red'}}
+            style={
+              { border: '1px solid red'
+              , suggestionsContainer: {borderStyle: 'solid'}
+              }
+            }
             name="snack"
             label="Snack"
             suggestions={this.state.suggestions}
