@@ -58,7 +58,7 @@ const App = React.createClass(
             p={1}
             style={
               { border: '1px solid red'
-              , suggestionsContainer: {borderStyle: 'solid'}
+              , suggestionsContainer: {borderStyle: 'dashed'}
               }
             }
             name="snack"

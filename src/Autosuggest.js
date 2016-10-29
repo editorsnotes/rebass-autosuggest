@@ -51,7 +51,7 @@ const Autosuggest = (
       , zIndex: zIndex[1]
       , borderWidth: 1
       , borderColor
-      , borderStyle: 'none solid solid'
+      , borderStyle: props.multiSection ? 'none solid solid' : 'solid'
       , borderBottomRightRadius: borderRadius
       , borderBottomLeftRadius: borderRadius
       , backgroundColor: colors.white
